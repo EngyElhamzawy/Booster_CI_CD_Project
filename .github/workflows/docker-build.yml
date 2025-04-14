@@ -24,9 +24,9 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t <your_dockerhub_username>/booster-ci-cd-project:latest .
+        docker build -t engyelhamzawy113/booster-ci-cd-project:latest .
 
     - name: Push Docker image
       run: |
-        docker push <your_dockerhub_username>/booster-ci-cd-project:latest
+        docker push engyelhamzawy113/booster-ci-cd-project:latest
 
