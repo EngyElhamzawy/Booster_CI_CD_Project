@@ -1,18 +1,20 @@
-# Use the official Python slim image as the base image
-FROM python:3.9-slim
+FROM ubuntu:20.04
 
-# Set the working directory inside the container to /app
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip python3-dev git curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# Copy everything from the current directory on your local machine to /app in the container
 COPY . /app
 
-# Install the required Python packages
-RUN pip install flask requests
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port your app will run on
-EXPOSE 5000
+EXPOSE 8000
 
-# Command to run your application
-CMD ["python", "app.py"]
+ENV PYTHONUNBUFFERED=1
+
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
 
