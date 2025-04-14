@@ -1,27 +1,18 @@
-# Use the official Python base image
+# Use an official Python runtime as a base image
 FROM python:3.9-slim
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y gnupg
-
-# Set the working directory to /app
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
+# Copy the application code into the container
 COPY . /app
 
-# Upgrade pip to the latest version
-RUN pip install --upgrade pip
+# Install Python dependencies manually (replace these with the ones you need)
+RUN pip install flask requests
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Expose the port the app runs on
+# Expose the port that your app will run on
 EXPOSE 5000
 
-# Define environment variable
-ENV NAME World
-
-# Run the application
+# Command to run your application (replace with your main app file if different)
 CMD ["python", "app.py"]
 
