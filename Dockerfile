@@ -1,21 +1,27 @@
-# Use the official Python image from the Docker Hub
+# Use the official Python base image
 FROM python:3.9-slim
 
-# Set the working directory in the container
+# Install system dependencies
+RUN apt-get update && apt-get install -y gnupg
+
+# Set the working directory to /app
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Install any needed packages specified in requirements.txt
+# Upgrade pip to the latest version
+RUN pip install --upgrade pip
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose the port the app runs on
-EXPOSE 8000
+EXPOSE 5000
 
-# Set environment variable to ensure Python output is not buffered
-ENV PYTHONUNBUFFERED 1
+# Define environment variable
+ENV NAME World
 
-# Run Django development server on container startup
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run the application
+CMD ["python", "app.py"]
 
